@@ -6,6 +6,10 @@ import "./assets/js/bootstrap.min.js";
 import "./assets/js/iCheck/jquery.icheck.js";
 import "./assets/js/icheck-init.js";
 import "./assets/js/jquery.nicescroll.js";
+import "./assets/js/jquery-ui-1.9.2.custom.min.js";
+import "./assets/js/jquery-migrate-1.2.1.min.js";
+import "./assets/js/jquery.isotope.js";
+
 // import "./assets/js/newImport/moment.min.js";
 // import "./assets/js/scripts.js";
 // import "./assets/js/axios.min.js";
