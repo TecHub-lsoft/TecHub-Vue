@@ -37,7 +37,7 @@
                             </div>
                             <hr>
                             <div class="video-usr">
-                                <a :href="'/user/toHome/'+(video.username)" class="" >
+                                <a :href="'http://localhost:8080/user/toHome/'+(video.username)" class="" >
                                     <img  th:src="@{/images/photos/user.png}" alt="" />
                                     <!--获取当前用户名-->
                                     <span class="usrname" >{{video.username}}</span>
@@ -81,11 +81,11 @@
 
                                         <li >
                                             <div class="avatar">
-                                                <a :href="'/user/toHome/'+(comment.commentator)"><img th:src="@{/images/photos/user3.png}" alt=""/></a>
+                                                <a :href="'http://localhost:8080/user/toHome/'+(comment.commentator)"><img th:src="@{/images/photos/user3.png}" alt=""/></a>
                                             </div>
                                             <div class="activity-desk">
 
-                                                <h5><a :href="'/user/toHome/'+(comment.commentator)">{{comment.commentator}}</a> <span>发表了评论</span></h5>
+                                                <h5><a :href="'http://localhost:8080/user/toHome/'+(comment.commentator)">{{comment.commentator}}</a> <span>发表了评论</span></h5>
                                                 <p class="text-muted" v-text="commentTimeDif[index]"> </p>
                                                 <div class="location-map">
                                                     <div class="map-canvas">
@@ -144,12 +144,12 @@
                                         <p> &nbsp;{{video.time}}</p>
                                     </a>
                                     <div class="p1">
-                                        <a :href="'/video/toVideo/'+(video.id)" v-bind:title="video.title" class="aitem">{{video.title}}</a>
+                                        <a :href="'http://localhost:8080/video/toVideo/'+(video.id)" v-bind:title="video.title" class="aitem">{{video.title}}</a>
                                     </div>
                                     <div >
                                         <p3>
                                             <img  height="15px" width="15px" th:src="@{/images/icon_up.png}" alt="" />
-                                            <a  :href="'/user/toHome/'+(video.username)"> {{video.username}}&nbsp </a>
+                                            <a  :href="'http://localhost:8080/user/toHome/'+(video.username)"> {{video.username}}&nbsp </a>
                                             <i style="font-size: 15px;color: #86b828" class="fa fa-check-circle-o"></i>
                                         </p3>
                                     </div>
@@ -212,12 +212,12 @@ onMounted(() => {
     moment.locale('zh-cn')
             window.addEventListener('scroll', this.handleScroll,true);  // 监听（绑定）滚轮滚动事件
             window.add
-            axios.get('/video/getVideoInfo/'+videoId).then(res=>{
+            axios.get('http://localhost:8080/video/getVideoInfo/'+videoId).then(res=>{
                 this.video=res.data;
                 this.video_username=res.data.username
 
                 const _this=this;
-                axios.get('/subscription/status/'+_this.video_username+"/"+currentUsername).then(res=> {
+                axios.get('http://localhost:8080/subscription/status/'+_this.video_username+"/"+currentUsername).then(res=> {
                     if (currentUsername===''){
                         //未订阅
                         $('.subscribe_unbtn').attr('style', 'display: none;') ;
@@ -237,7 +237,7 @@ onMounted(() => {
                 })
             });
 
-    axios.get(`/video/getVideoInfo/${videoId.value}`).then(res => {
+    axios.get(`http://localhost:8080/video/getVideoInfo/${videoId.value}`).then(res => {
       video.value = res.data;
       video_username.value = res.data.username;
 
@@ -269,7 +269,7 @@ const subscribe = () => {
                      */
                     clearTimeout(this.timer);
                     this.timer = setTimeout(() => {
-                        axios.get('/subscription/subscribe/' + this.video.username).then(res => {
+                        axios.get('http://localhost:8080/subscription/subscribe/' + this.video.username).then(res => {
                             console.log("订阅成功");
                         })
                     },1000)
@@ -356,7 +356,7 @@ const post_comment = () => {
 }
 const loadMore = (event) => {
     if(this.upLoading||event) {
-                    axios('/comment/getComment/'+this.currentPage+"/"+videoId).then(res=>{
+                    axios('http://localhost:8080/comment/getComment/'+this.currentPage+"/"+videoId).then(res=>{
                         this.commentList=res.data.records;
                         if (this.commentList.length>0){
                             this.totalPages=res.data.pages;
@@ -439,7 +439,7 @@ const returnTop = () => {
 }
 const created = () => {
     moment.locale('zh-cn')
-            axios.get('/video/getAllVideos/1').then(res=>{
+            axios.get('http://localhost:8080/video/getAllVideos/1').then(res=>{
                 for (let i = 0; i <res.data.records.length -1; i++) {
                     let post_time = res.data.records[i].postTime
                     let timeDif = moment(post_time).startOf('minute').fromNow()

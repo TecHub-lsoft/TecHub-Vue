@@ -11,13 +11,13 @@
         <div v-for="youtuber in youtubers" :key="youtuber.username">
             <div class="panel-body">
                 <div class="media">
-                    <a class="pull-left" :href="'/user/toHome/' + youtuber.username">
+                    <a class="pull-left" :href="'http://localhost:8080/user/toHome/' + youtuber.username">
                         <img style="border-radius: 50%; width: 75px; height: 75px" class="thumb media-object" src="/images/photos/user2.png" alt="">
                     </a>
                     <div class="media-body">
                         <address>
                             <br>
-                            <a style="text-decoration: none" :href="'/user/toHome/' + youtuber.username">
+                            <a style="text-decoration: none" :href="'http://localhost:8080/user/toHome/' + youtuber.username">
                                 <strong style="font-size: large">{{ youtuber.username }}</strong><br>
                             </a>
                             <div>{{ youtuber.signature }}
@@ -69,9 +69,9 @@ const timer = ref(0)
 const username = ref('') // Assuming this comes from somewhere, might need adjustment
 
 onMounted(async () => {
-    const res = await axios.get(`/subscription/search_focus/${username.value}`)
+    const res = await axios.get(`http://localhost:8080/subscription/search_focus/${username.value}`)
     for (let subscribe of res.data) {
-        const userData = await axios.get(`/user/getUsersInfo/${subscribe.youtuber}`)
+        const userData = await axios.get(`http://localhost:8080/user/getUsersInfo/${subscribe.youtuber}`)
         youtubers.value.push(userData.data)
     }
 })
@@ -84,7 +84,7 @@ const subscribe = async (event) => {
     const youtuberName = event.target.name.slice(3)
     clearTimeout(timer.value)
     timer.value = setTimeout(async () => {
-        await axios.get(`/subscription/subscribe/${youtuberName}`)
+        await axios.get(`http://localhost:8080/subscription/subscribe/${youtuberName}`)
         console.log("订阅成功")
     }, 1000)
 }
@@ -97,7 +97,7 @@ const unSubscribe = async (event) => {
     const youtuberName = event.target.name.slice(6)
     clearTimeout(timer.value)
     timer.value = setTimeout(async () => {
-        await axios.get(`/subscription/undo_subscribe/${youtuberName}`)
+        await axios.get(`http://localhost:8080/subscription/undo_subscribe/${youtuberName}`)
         console.log("取消订阅成功")
     }, 1000)
 }

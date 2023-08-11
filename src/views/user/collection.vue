@@ -9,12 +9,12 @@
               <div class="panel-body">
                 <div class="media-gal2">
                   <div v-for="(video,index) in videos" class="images item">
-                    <a :href="'/video/toVideo/' + video.id" data-toggle="modal">
+                    <a :href="'http://localhost:8080/video/toVideo/' + video.id" data-toggle="modal">
                       <img class="vimg" :src="video.img" alt="" />
                       <p>&nbsp;{{video.time}}</p>
                       <div class="myplayicon"></div>
                     </a>
-                    <div class="p1"><a :href="'/video/toVideo/' + video.id" class="aitem">{{video.title}}</a></div>
+                    <div class="p1"><a :href="'http://localhost:8080/video/toVideo/' + video.id" class="aitem">{{video.title}}</a></div>
                     <div class="p2">
                       <i style="font-size: 16px" class="fa fa-youtube-play"></i>&nbsp212万次 &nbsp&nbsp&nbsp&nbsp
                       <i style="font-size: 16px" class="fa fa-clock-o"></i>&nbsp {{video.postTime}}
@@ -60,7 +60,7 @@ const getVideo = async (pageNum) => {
     moment.locale('zh-cn');
     
     try {
-        const res = await axios.get('/collection/getCollection/' + pageNum + '/' + username); // 假设username已经定义
+        const res = await axios.get('http://localhost:8080/collection/getCollection/' + pageNum + '/' + username); // 假设username已经定义
         totalPages.value = res.data.pages === 0 ? 1 : res.data.pages;
 
         res.data.records.forEach(record => {

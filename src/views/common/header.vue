@@ -70,17 +70,17 @@
                         </a>
                     </li>
                     <li>
-                        <a :href="'/user/toFocus/'+currentUsername">
+                        <a :href="'http://localhost:8080/user/toFocus/'+currentUsername">
                             <i style="font-size: 20px;" class="fa fa-heart"></i> 我的关注
                         </a>
                     </li>
                     <li>
-                        <a :href="'/user/toFans/'+currentUsername">
+                        <a :href="'http://localhost:8080/user/toFans/'+currentUsername">
                             <i style="font-size: 20px;" class="fa fa-group"></i> 我的粉丝
                         </a>
                     </li>
                     <li>
-                        <a :href="'/user/toCollection/'+currentUsername">
+                        <a :href="'http://localhost:8080/user/toCollection/'+currentUsername">
                             <i style="font-size: 24px;" class="fa fa-star"></i> 我的收藏
                         </a>
                     </li>
@@ -97,9 +97,9 @@
                 </a>
                 <template v-if="isAuthenticated()">
   <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
-    <li><a :href="'/user/toHome/' + currentUsername"><i style="font-size: 20px;" class="fa fa-user"></i> 个人</a></li>
+    <li><a :href="'http://localhost:8080/user/toHome/' + currentUsername"><i style="font-size: 20px;" class="fa fa-user"></i> 个人</a></li>
     <li><a href="#"><i style="font-size: 20px;" class="fa fa-cog"></i> 设置</a></li>
-    <li><a href="/logout"><i style="font-size: 20px;" class="fa fa-sign-out"></i> 注销</a></li>
+    <li><a href="http://localhost:8080/logout"><i style="font-size: 20px;" class="fa fa-sign-out"></i> 注销</a></li>
   </ul>
 </template>
 <template v-else>
@@ -147,19 +147,19 @@
 
         <div class="panel-footer custom-trq-footer">
   <ul class="user-states">
-    <a :href="'/user/toHome/' + username">
+    <a :href="'http://localhost:8080/user/toHome/' + username">
       <li :class="activeUrl === 'home.html' ? 'liActive' : 'liNotActive'"><i class="fa fa-home"></i>&nbsp主页</li>
     </a>
-    <a :href="'/user/toVideos/' + username">
+    <a :href="'http://localhost:8080/user/toVideos/' + username">
       <li :class="activeUrl === 'videos.html' ? 'liActive' : 'liNotActive'"><i class="fa fa-youtube-play"></i>&nbsp投稿&nbsp<span>127</span></li>
     </a>
-    <a :href="'/user/toFocus/' + username">
+    <a :href="'http://localhost:8080/user/toFocus/' + username">
       <li :class="activeUrl === 'focus.html' ? 'liActive' : 'liNotActive'"><i class="fa fa-heart"></i>&nbsp关注&nbsp<span>853</span></li>
     </a>
-    <a :href="'/user/toFans/' + username">
+    <a :href="'http://localhost:8080/user/toFans/' + username">
       <li :class="activeUrl === 'fans.html' ? 'liActive' : 'liNotActive'"><i class="fa fa-users"></i>&nbsp粉丝&nbsp<span>311</span></li>
     </a>
-    <a :href="'/user/toCollection/' + username">
+    <a :href="'http://localhost:8080/user/toCollection/' + username">
       <li :class="activeUrl === 'collection.html' ? 'liActive' : 'liNotActive'"><i class="fa fa-star"></i>&nbsp收藏&nbsp<span>127</span></li>
     </a>
   </ul>
@@ -200,7 +200,7 @@
   
   onMounted(() => {
     moment.locale('zh-cn')
-    axios.get('/notification/getNotifications/' + currentUsername).then(res => {
+    axios.get('http://localhost:8080/notification/getNotifications/' + currentUsername).then(res => {
       if (res.data !== null) {
         header.notifications = res.data
         res.data.forEach(subscribe => {
@@ -213,7 +213,7 @@
         })
       }
     })
-    axios.get('/notification/getNotificationsNum/' + currentUsername).then(res => {
+    axios.get('http://localhost:8080/notification/getNotificationsNum/' + currentUsername).then(res => {
       if (res.data !== null) {
         header.notificationsNum = res.data
       } else {
@@ -221,7 +221,7 @@
       }
     })
   
-    axios.get('/user/getUsersInfo/' + userHeader.username).then(res => {
+    axios.get('http://localhost:8080/user/getUsersInfo/' + userHeader.username).then(res => {
       if (res.data.signature) {
         userHeader.signature = res.data.signature
       }
@@ -229,23 +229,23 @@
   })
   
   function clearAll() {
-    axios.get('/notification/clearNotifications/' + currentUsername).then(() => {
+    axios.get('http://localhost:8080/notification/clearNotifications/' + currentUsername).then(() => {
       header.notifications = []
       hasRead()
     })
   }
   
   function hasRead() {
-    axios.get('/notification/clearNotificationsNum/' + currentUsername).then(() => {
+    axios.get('http://localhost:8080/notification/clearNotificationsNum/' + currentUsername).then(() => {
       header.notificationsNum = 0
     })
   }
   
   function setSignature() {
     if (userHeader.signature === '') {
-      axios.get('/user/deleteSignature/' + currentUsername)
+      axios.get('http://localhost:8080/user/deleteSignature/' + currentUsername)
     } else {
-      axios.get('/user/setSignature/' + currentUsername + "/" + userHeader.signature)
+      axios.get('http://localhost:8080/user/setSignature/' + currentUsername + "/" + userHeader.signature)
     }
   }
   
@@ -265,7 +265,7 @@
                      */
                         clearTimeout(this.timer);
                         this.timer = setTimeout(() => {
-                            axios.get('/subscription/subscribe/' + youtuberName).then(res => {
+                            axios.get('http://localhost:8080/subscription/subscribe/' + youtuberName).then(res => {
                                 console.log("订阅成功");
                             })
                         }, 1000)
@@ -283,7 +283,7 @@
                     var youtuberName=subName.slice(3);
                     clearTimeout(this.timer);
                     this.timer = setTimeout(() => {
-                        axios.get('/subscription/undo_subscribe/' + youtuberName).then(res => {
+                        axios.get('http://localhost:8080/subscription/undo_subscribe/' + youtuberName).then(res => {
                             console.log("取消订阅成功");
                         })
                     }, 1000)

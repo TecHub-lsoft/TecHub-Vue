@@ -140,7 +140,7 @@ const post = async () => {
                 params.append('status', video_status.value)
                 params.append('introduction', introduction.value)
                 
-                await axios.post('/video/addVideo', params, {
+                await axios.post('http://localhost:8080/video/addVideo', params, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'x-oss-object-acl': 'public-read'

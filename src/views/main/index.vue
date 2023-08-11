@@ -12,7 +12,7 @@
                 <div class="media-gal">
                   <div v-for="(video, index) in videos" class="images item">
                     <!-- Vue传入参数的方式 -->
-                    <router-link :to="'/video/toVideo/' + video.id" data-toggle="modal">
+                    <router-link :to="'http://localhost:8080/video/toVideo/' + video.id" data-toggle="modal">
                       <span class="spanImg">
                         <img class="vimg" :src="video.img" alt="" />
                         <p>&nbsp;{{ video.time }}</p>
@@ -21,7 +21,7 @@
                     </router-link>
                     <div>
                       <p1>
-                        <router-link :to="'/video/toVideo/' + video.id" :title="video.title" class="aitem">{{ video.title }}</router-link>
+                        <router-link :to="'http://localhost:8080/video/toVideo/' + video.id" :title="video.title" class="aitem">{{ video.title }}</router-link>
                       </p1>
                     </div>
                     <div>
@@ -29,7 +29,7 @@
                         <!-- 使用Vue的语法引用图片 -->
                         <img :src="require('@/images/icon_up.png')" alt="Icon Up" />
                         
-                        <router-link :to="'/user/toHome/' + video.username"> &nbsp{{ video.username }}&nbsp</router-link>
+                        <router-link :to="'http://localhost:8080/user/toHome/' + video.username"> &nbsp{{ video.username }}&nbsp</router-link>
                         <i style="font-size: 15px; color: #86b828" class="fa fa-check-circle-o"></i>
                       </p3>
                     </div>
@@ -81,7 +81,7 @@
   
   const getVideo = (pageNum) => {
     moment.locale('zh-cn');
-    axios.get('/video/getAllVideos/' + pageNum).then((res) => {
+    axios.get('http://localhost:8080/video/getAllVideos/' + pageNum).then((res) => {
       totalPages.value = res.data.pages;
       res.data.records.forEach((record) => {
         let post_time = record.postTime;
@@ -119,20 +119,20 @@
   };
   
   const clearAll = () => {
-    axios.get('/notification/clearNotifications/' + currentUsername).then(() => {
+    axios.get('http://localhost:8080/notification/clearNotifications/' + currentUsername).then(() => {
       notifications.value = [];
       hasRead();
     });
   };
   
   const hasRead = () => {
-    axios.get('/notification/clearNotificationsNum/' + currentUsername).then(() => {
+    axios.get('http://localhost:8080/notification/clearNotificationsNum/' + currentUsername).then(() => {
       notificationsNum.value = 0;
     });
   };
   
   const getKeyVideo = (keyword) => {
-    axios.get('/video/getKeyVideos/' + currentPage.value + '/' + keyword).then((res) => {
+    axios.get('http://localhost:8080/video/getKeyVideos/' + currentPage.value + '/' + keyword).then((res) => {
       totalPages.value = res.data.pages;
       res.data.records.forEach((record) => {
         let post_time = record.postTime;
@@ -159,7 +159,7 @@
   
   onMounted(() => {
     moment.locale('zh-cn');
-    axios.get('/notification/getNotifications/' + currentUsername).then((res) => {
+    axios.get('http://localhost:8080/notification/getNotifications/' + currentUsername).then((res) => {
       if (res.data !== null) {
         notifications.value = res.data;
         res.data.forEach((subscribe) => {
@@ -172,7 +172,7 @@
         });
       }
     });
-    axios.get('/notification/getNotificationsNum/' + currentUsername).then((res) => {
+    axios.get('http://localhost:8080/notification/getNotificationsNum/' + currentUsername).then((res) => {
       if (res.data !== null) {
         notificationsNum.value = res.data;
       } else {

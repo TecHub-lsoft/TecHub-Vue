@@ -34,10 +34,10 @@
                                     <div v-if="top_videoInfo!==''" class="top_video">
                                         <div  class="images item ">
                                             <!--注意此处Vue传入参数的方式-->
-                                            <a  :href="'/video/toVideo/'+(top_videoInfo.id)"  data-toggle="modal" >
+                                            <a  :href="'http://localhost:8080/video/toVideo/'+(top_videoInfo.id)"  data-toggle="modal" >
                                                 <img class="vimg" :src="top_videoInfo.img" alt="" />
                                             </a>
-                                            <a :href="'/video/toVideo/'+(top_videoInfo.id)" class="aitem">{{top_videoInfo.title}}</a>
+                                            <a :href="'http://localhost:8080/video/toVideo/'+(top_videoInfo.id)" class="aitem">{{top_videoInfo.title}}</a>
                                             <div class="p2">
                                                 <i style="font-size: 14px;" class="fa fa-youtube-play"></i>&nbsp212万次 &nbsp&nbsp&nbsp&nbsp
                                                 <i style="font-size: 14px;" class="fa fa-comments-o"></i>&nbsp2213  &nbsp&nbsp&nbsp&nbsp
@@ -143,14 +143,14 @@ const totalPage = ref(1);
 const isChosenDisabled = ref(true);
 
 async function fetchTopVideoInfo() {
-    const response = await axios.get(`/video/getTopVideoInfoByUsernameAndStatus/${username}`);
+    const response = await axios.get(`http://localhost:8080/video/getTopVideoInfoByUsernameAndStatus/${username}`);
     if (response.data) {
         top_videoInfo.value = response.data;
     }
 }
 
 async function getVideo(pageNum) {
-    const response = await axios.get(`/video/get7VideosInfoPerPageByUsername/${pageNum}/${username}`);
+    const response = await axios.get(`http://localhost:8080/video/get7VideosInfoPerPageByUsername/${pageNum}/${username}`);
     totalPage.value = response.data.pages === 0 ? 1 : response.data.pages;
     
     videos.value = response.data.records.map(video => {
@@ -181,11 +181,11 @@ function reChoose() {
 async function submit() {
     if (top_video_id.value !== top_videoInfo.value.id) {
         if (top_videoInfo.value !== '') {
-            await axios.get(`/video/cancelTopVideoStatus/${top_videoInfo.value.id}`);
+            await axios.get(`http://localhost:8080/video/cancelTopVideoStatus/${top_videoInfo.value.id}`);
         }
         const response = await axios.get(`/video/getVideoInfoById/${top_video_id.value}`);
         top_videoInfo.value = response.data;
-        await axios.get(`/video/setTopVideoStatus/${top_video_id.value}`);
+        await axios.get(`http://localhost:8080/video/setTopVideoStatus/${top_video_id.value}`);
         reChoose();
     } else {
         reChoose();
@@ -193,7 +193,7 @@ async function submit() {
 }
 
 async function cancel() {
-    await axios.get(`/video/cancelTopVideoStatus/${top_videoInfo.value.id}`);
+    await axios.get(`http://localhost:8080/video/cancelTopVideoStatus/${top_videoInfo.value.id}`);
     top_videoInfo.value = '';
 }
 

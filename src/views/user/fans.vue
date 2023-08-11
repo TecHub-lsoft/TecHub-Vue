@@ -30,7 +30,7 @@
                       <div class="media-body">
                         <address>
                           <br>
-                          <a style="text-decoration: none" :href="'/user/toHome/' + fan.username">
+                          <a style="text-decoration: none" :href="'http://localhost:8080/user/toHome/' + fan.username">
                             <strong style="font-size: large">{{ fan.username }}</strong>
                           </a>
                           <div>{{ fan.signature }}</div>
@@ -82,7 +82,7 @@ let timer = null;
 onMounted(async () => {
   try {
     state.username = document.querySelector("#username").value;
-    const response = await axios.get('/user/getUsersInfo/' + state.username);
+    const response = await axios.get('http://localhost:8080/user/getUsersInfo/' + state.username);
     
     if (response.data.signature) {
       state.signature = response.data.signature;
@@ -110,9 +110,9 @@ onMounted(async () => {
 const setSignature = async () => {
   try {
     if (state.signature === '') {
-      await axios.get('/user/deleteSignature/' + currentUsername);
+      await axios.get('http://localhost:8080/user/deleteSignature/' + currentUsername);
     } else {
-      await axios.get('/user/setSignature/' + currentUsername + "/" + state.signature);
+      await axios.get('http://localhost:8080/user/setSignature/' + currentUsername + "/" + state.signature);
     }
   } catch (error) {
     console.error("An error occurred:", error);
@@ -131,7 +131,7 @@ const subscribe = async (event) => {
 
       clearTimeout(timer);
       timer = setTimeout(async () => {
-        await axios.get('/subscription/subscribe/' + youtuberName);
+        await axios.get('http://localhost:8080/subscription/subscribe/' + youtuberName);
         console.log("订阅成功");
       }, 1000);
     } else {
@@ -154,7 +154,7 @@ const un_subscribe = async (event) => {
 
     clearTimeout(timer);
     timer = setTimeout(async () => {
-      await axios.get('/subscription/undo_subscribe/' + youtuberName);
+      await axios.get('http://localhost:8080/subscription/undo_subscribe/' + youtuberName);
       console.log("取消订阅成功");
     }, 1000);
   } catch (error) {
