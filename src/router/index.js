@@ -7,6 +7,7 @@ import Login from '@/views/main/login.vue'
 import Main from '@/views/main/index.vue'
 import Register from '@/views/main/register.vue'
 import Manager from '@/views/main/manager.vue'
+import Video from '@/views/video/video.vue'
 
 // 配置 定义映射关系 地址和组件的映射对应关系
 const routes = [
@@ -22,6 +23,10 @@ const routes = [
 	{
 		path: '/manager',  // 请求路径
 		component: Manager   // 组件的引用: 静态引用
+	},
+	{
+		path: '/video',  // 请求路径
+		component: Video   // 组件的引用: 静态引用
 	},
 	{
 		path: '/main',
